@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: url('./assets/image1.png') no-repeat center center fixed;
+  background-size: cover;
+  backdrop-filter: blur(2px);
+  color: #fff;
+}
+
+/* Main container */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+
+/* Header text */
+h1, p {
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px #000;
+}
+
+/* Login row */
+#login-controls {
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  width: 200px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 16px;
+  margin-left: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #1976d2;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #1565c0;
+}
+
+/* User list */
+#userlistbox {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 200px;
+  height: 80px;
+  margin-top: 10px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 10px;
+  border-radius: 12px;
+  color: #fff;
+  backdrop-filter: blur(10px);
+}
+
+/* Video container with glassmorphism */
+.camera-box {
+  margin-top: 20px;
+  width: 520px;
+  height: 400px;
+  position: relative;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main video */
+#received_video {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  border: 2px solid #2196f3;
+  background: rgba(255,255,255,0.05);
+  object-fit: cover;
+}
+
+/* Preview video */
+#local_video {
+  width: 120px;
+  height: 90px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border-radius: 8px;
+  border: 2px solid #fff;
+  object-fit: cover;
+  box-shadow: 0 0 10px #000;
+}
+
+/* Hangup Button */
+#hangup-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background: #f44336;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+#hangup-button:hover {
+  background: #d32f2f;
+  transform: scale(1.05);
+}
