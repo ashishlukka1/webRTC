@@ -127,16 +127,16 @@ var httpServer = http.createServer(function(request, response) {
   }
 
   // Handle WebSocket upgrade requests
-  if (request.url === '/ws') {
-    response.writeHead(200);
-    response.end();
-    return;
+  // Note: WebSocket upgrade requests are handled by the websocket
+  // server attached to this HTTP server. Do not short-circuit
+  // requests to '/ws' here or the upgrade will never happen.
+  let parsedUrl = url.parse(request.url);
+  // Prevent directory traversal and normalize path
+  let pathname = decodeURI(parsedUrl.pathname);
+  if (pathname === '/' || pathname === '') {
+    pathname = '/index.html';
   }
-let parsedUrl = url.parse(request.url);
-let filePath = path.join(__dirname, parsedUrl.pathname);
-if (filePath === path.join(__dirname, '/')) {
-  filePath = path.join(__dirname, 'index.html');
-}
+  let filePath = path.join(__dirname, pathname);
 
   // Handle static file requests
   // let filePath = path.join(__dirname, request.url);

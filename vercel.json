@@ -6,6 +6,11 @@
       "dest": "/server.js"
     },
     {
+      "src": "\\/(.*\\.(js|css|png|jpg|ico|json))",
+      "headers": { "cache-control": "public, max-age=0, must-revalidate" },
+      "dest": "$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }

@@ -101,10 +101,39 @@ function connect() {
     scheme = "wss";
   }
   
-  // Use the current hostname and path for WebSocket connection
-  serverUrl = scheme + "://" + window.location.host + "/ws";
+  // Allow overriding the signaling server URL in two ways:
+  // 1) A URL query parameter `signal`, e.g. ?signal=your-signaling.example.com
+  // 2) A global `SIGNALING_SERVER_URL` set on window (e.g. injected by hosting)
+  // If no override is provided, default to same-origin /ws
+  var urlParams = new URLSearchParams(window.location.search);
+  var override = urlParams.get('signal') || window.SIGNALING_SERVER_URL;
 
-  connection = new WebSocket(serverUrl, "json");
+  if (override) {
+    // If override already includes a scheme (ws:// or wss://) use it, otherwise
+    // prepend the computed scheme and treat the value as host[:port].
+    if (/^wss?:\/\//i.test(override)) {
+      serverUrl = override.replace(/\/$/, '');
+    } else {
+      serverUrl = scheme + '://' + override.replace(/\/$/, '');
+    }
+    // Ensure the path ends with /ws
+    if (!serverUrl.match(/\/ws$/)) {
+      serverUrl = serverUrl + '/ws';
+    }
+  } else {
+    // Use the current hostname and path for WebSocket connection
+    serverUrl = scheme + '://' + window.location.host + '/ws';
+  }
+
+  console.log('Connecting to signaling server at: ' + serverUrl);
+
+  try {
+    connection = new WebSocket(serverUrl, "json");
+  } catch (e) {
+    log_error('WebSocket creation failed: ' + e);
+    alert('Unable to create WebSocket connection.\nIf you deployed to Vercel, note Vercel does not support running a persistent WebSocket server.\nDeploy the signaling server to a platform that supports WebSockets (Render, Fly, Railway, etc.) and point the client at it with ?signal=HOST_OR_WSS_URL');
+    return;
+  }
 
   connection.onopen = function(evt) {
 
